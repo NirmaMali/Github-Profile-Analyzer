@@ -2,7 +2,7 @@
    GitHub Profile Analyzer — Frontend Application
    ============================================================ */
 
-const API = ''; // relative URL — works on both localhost and Render
+const API = '';
 
 // ----- State -----
 let currentPage = 1;
@@ -10,7 +10,6 @@ let totalPages = 1;
 let currentSort = 'analyzed_at';
 let currentOrder = 'desc';
 const PAGE_LIMIT = 10;
-const GITHUB_API = 'https://api.github.com';
 
 // ===================================================================
 // HELPER FUNCTIONS
@@ -21,11 +20,8 @@ function formatDate(dateStr) {
   const d = new Date(dateStr);
   if (isNaN(d.getTime())) return '—';
   return d.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+    year: 'numeric', month: 'short', day: 'numeric',
+    hour: '2-digit', minute: '2-digit',
   });
 }
 
@@ -38,13 +34,8 @@ function getScoreBadge(score) {
   return `<span class="badge ${cls}">${num}</span>`;
 }
 
-function showLoading(el) {
-  el.classList.remove('hidden');
-}
-
-function hideLoading(el) {
-  el.classList.add('hidden');
-}
+function showLoading(el) { el.classList.remove('hidden'); }
+function hideLoading(el) { el.classList.add('hidden'); }
 
 function showAlert(container, message, type = 'error') {
   const cls = type === 'success' ? 'alert-success' : type === 'info' ? 'alert-info' : 'alert-error';
@@ -72,84 +63,20 @@ function num(val) {
   return isNaN(n) ? 0 : n;
 }
 
-function getGitHubHeaders() {
-  return {
-    'Accept': 'application/vnd.github.v3+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-  };
-}
-
 function parseJsonSafely(response) {
   return response.text().then((text) => {
     if (!text) return {};
-    try {
-      return JSON.parse(text);
-    } catch (err) {
-      return {};
-    }
+    try { return JSON.parse(text); } catch (err) { return {}; }
   });
 }
 
-function shouldUseBrowserFallback(status, data) {
-  const message = `${data?.error || ''} ${data?.message || ''}`.toLowerCase();
-  return (
-    status === 429 ||
-    status === 502 ||
-    status === 503 ||
-    message.includes('github api') ||
-    message.includes('rate limit') ||
-    message.includes('network')
-  );
-}
+// ===================================================================
+// CORE API CALL — only calls YOUR backend, never GitHub directly
+// ===================================================================
 
-async function fetchGitHubJson(url) {
-  const response = await fetch(url, { headers: getGitHubHeaders() });
-  const data = await parseJsonSafely(response);
-
-  if (response.status === 404) {
-    throw new Error('GitHub user not found');
-  }
-
-  if (response.status === 401 || response.status === 403 || response.status === 429) {
-    throw new Error('GitHub rate limit exceeded. Please try again later.');
-  }
-
-  if (!response.ok) {
-    throw new Error(`GitHub request failed (${response.status})`);
-  }
-
-  return data;
-}
-
-async function fetchGitHubRepos(username) {
-  const allRepos = [];
-
-  for (let page = 1; page <= 10; page++) {
-    const repos = await fetchGitHubJson(
-      `${GITHUB_API}/users/${encodeURIComponent(username)}/repos?per_page=100&page=${page}&sort=updated`
-    );
-    allRepos.push(...repos);
-
-    if (repos.length < 100) {
-      break;
-    }
-  }
-
-  return allRepos;
-}
-
-async function analyzeProfileFromBrowser(username) {
-  const [profile, repos] = await Promise.all([
-    fetchGitHubJson(`${GITHUB_API}/users/${encodeURIComponent(username)}`),
-    fetchGitHubRepos(username),
-  ]);
-
+async function requestProfileAnalysis(username) {
   const response = await fetch(`${API}/api/profiles/analyze/${encodeURIComponent(username)}`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ profile, repos }),
   });
   const data = await parseJsonSafely(response);
 
@@ -158,23 +85,6 @@ async function analyzeProfileFromBrowser(username) {
   }
 
   return data;
-}
-
-async function requestProfileAnalysis(username) {
-  const response = await fetch(`${API}/api/profiles/analyze/${encodeURIComponent(username)}`, {
-    method: 'POST',
-  });
-  const data = await parseJsonSafely(response);
-
-  if (response.ok) {
-    return data;
-  }
-
-  if (shouldUseBrowserFallback(response.status, data)) {
-    return analyzeProfileFromBrowser(username);
-  }
-
-  throw new Error(data.error || data.message || `Request failed (${response.status})`);
 }
 
 // ===================================================================
@@ -396,13 +306,11 @@ async function compareProfiles() {
   showLoading(compareLoading);
 
   try {
-    // Silently analyze both users first
     await Promise.all([
       requestProfileAnalysis(user1),
       requestProfileAnalysis(user2),
     ]);
 
-    // Now compare
     const res = await fetch(`${API}/api/profiles/compare?users=${encodeURIComponent(user1)},${encodeURIComponent(user2)}`);
     const data = await res.json();
 
@@ -425,7 +333,6 @@ function renderCompareCards(container, p1, p2) {
   const stats = ['followers', 'public_repos', 'total_stars', 'total_forks', 'activity_score'];
   const labels = { followers: 'Followers', public_repos: 'Repos', total_stars: 'Stars', total_forks: 'Forks', activity_score: 'Activity Score' };
 
-  // Determine overall winner by counting stat wins
   let wins1 = 0, wins2 = 0;
   stats.forEach((s) => {
     if (num(p1[s]) > num(p2[s])) wins1++;
@@ -542,6 +449,5 @@ async function viewProfile(username) {
   }
 }
 
-// Make viewProfile globally accessible for onclick handlers in table
 window.viewProfile = viewProfile;
 window.deleteProfileInline = deleteProfileInline;

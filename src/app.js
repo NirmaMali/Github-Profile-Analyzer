@@ -13,7 +13,9 @@ const app = express();
 app.set('trust proxy', 1);
 
 // Middleware stack in this order:
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
