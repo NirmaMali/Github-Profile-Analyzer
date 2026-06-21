@@ -10,6 +10,7 @@ const profileRoutes = require('./routes/profileRoutes');
 const { testConnection } = require('./config/db');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Middleware stack in this order:
 app.use(helmet());
