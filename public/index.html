@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GitHub Profile Analyzer — Analyze, compare, and explore GitHub developer profiles with rich insights, activity scoring, and a premium dashboard." />
+  <title>GitHub Profile Analyzer — Developer Insights Dashboard</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>" />
+</head>
+<body>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="sidebar" role="navigation" aria-label="Main navigation">
+    <div class="sidebar-header">
+      <svg class="sidebar-logo" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#24292f"/>
+      </svg>
+      <span class="sidebar-title">GitHub Analyzer</span>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="nav-item active" data-tab="analyze" role="button" tabindex="0" aria-label="Analyze a profile">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span class="nav-label">Analyze</span>
+      </li>
+      <li class="nav-item" data-tab="profiles" role="button" tabindex="0" aria-label="View all profiles">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="nav-label">All Profiles</span>
+      </li>
+      <li class="nav-item" data-tab="compare" role="button" tabindex="0" aria-label="Compare profiles">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span class="nav-label">Compare</span>
+      </li>
+      <li class="nav-item" data-tab="delete" role="button" tabindex="0" aria-label="Delete a profile">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        <span class="nav-label">Delete</span>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      &copy; 2026 GitHub Analyzer
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="main-content">
+
+    <!-- ========= TAB 1: ANALYZE ========= -->
+    <section class="tab-panel active" id="panel-analyze">
+      <header class="content-header">
+        <h1>Analyze Profile</h1>
+        <p>Enter a GitHub username to fetch and analyze their profile, repos, and activity.</p>
+      </header>
+      <div class="content-body">
+        <div class="card card-lg" style="max-width: 600px;">
+          <div class="form-inline">
+            <div class="form-group" style="flex:1; margin-bottom:0;">
+              <label class="form-label" for="analyze-username">GitHub Username</label>
+              <input
+                type="text"
+                class="form-input"
+                id="analyze-username"
+                placeholder="e.g. torvalds"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+            <button class="btn btn-primary" id="analyze-btn" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              Analyze Profile
+            </button>
+          </div>
+        </div>
+
+        <!-- Analyze Result Container -->
+        <div id="analyze-alert" class="mt-24"></div>
+        <div id="analyze-loading" class="loading-container hidden">
+          <div class="spinner spinner-dark spinner-lg"></div>
+          <span>Analyzing profile…</span>
+        </div>
+        <div id="analyze-result" class="mt-24"></div>
+      </div>
+    </section>
+
+    <!-- ========= TAB 2: ALL PROFILES ========= -->
+    <section class="tab-panel" id="panel-profiles">
+      <header class="content-header">
+        <h1>All Analyzed Profiles</h1>
+        <p>Browse and manage all previously analyzed GitHub profiles.</p>
+      </header>
+      <div class="content-body">
+
+        <!-- Sort Controls -->
+        <div class="controls-bar">
+          <div class="controls-group">
+            <label for="sort-select" class="form-label" style="margin-bottom:0; margin-right:4px;">Sort by</label>
+            <select class="form-select" id="sort-select">
+              <option value="analyzed_at">Analyzed At</option>
+              <option value="followers">Followers</option>
+              <option value="total_stars">Stars</option>
+              <option value="public_repos">Repos</option>
+              <option value="activity_score">Activity Score</option>
+            </select>
+            <button class="btn btn-outline btn-sm" id="order-toggle" type="button" title="Toggle sort order">
+              ↓ DESC
+            </button>
+          </div>
+        </div>
+
+        <!-- Profiles Table -->
+        <div id="profiles-loading" class="loading-container hidden">
+          <div class="spinner spinner-dark spinner-lg"></div>
+          <span>Loading profiles…</span>
+        </div>
+
+        <div id="profiles-table-wrapper" class="table-wrapper hidden">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Username</th>
+                <th>Repos</th>
+                <th>Followers</th>
+                <th>Stars</th>
+                <th>Top Language</th>
+                <th>Analyzed At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="profiles-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="profiles-empty" class="empty-state hidden">
+          <div class="empty-state-icon">📭</div>
+          <h3>No profiles analyzed yet</h3>
+          <p>Go to the <strong>Analyze</strong> tab to add your first GitHub profile!</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination hidden" id="profiles-pagination">
+          <button class="btn btn-outline btn-sm" id="page-prev" type="button">← Prev</button>
+          <span class="pagination-info" id="page-info">Page 1 of 1</span>
+          <button class="btn btn-outline btn-sm" id="page-next" type="button">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= TAB 3: COMPARE ========= -->
+    <section class="tab-panel" id="panel-compare">
+      <header class="content-header">
+        <h1>Compare Profiles</h1>
+        <p>Enter two GitHub usernames to compare their stats side by side.</p>
+      </header>
+      <div class="content-body">
+        <div class="card card-lg" style="max-width: 700px;">
+          <div class="compare-inputs">
+            <div class="form-group">
+              <label class="form-label" for="compare-user1">Username 1</label>
+              <input type="text" class="form-input" id="compare-user1" placeholder="e.g. torvalds" autocomplete="off" spellcheck="false" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="compare-user2">Username 2</label>
+              <input type="text" class="form-input" id="compare-user2" placeholder="e.g. gaearon" autocomplete="off" spellcheck="false" />
+            </div>
+            <button class="btn btn-primary" id="compare-btn" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              Compare
+            </button>
+          </div>
+        </div>
+
+        <div id="compare-alert" class="mt-24"></div>
+        <div id="compare-loading" class="loading-container hidden">
+          <div class="spinner spinner-dark spinner-lg"></div>
+          <span>Comparing profiles…</span>
+        </div>
+        <div id="compare-result" class="mt-24"></div>
+      </div>
+    </section>
+
+    <!-- ========= TAB 4: DELETE ========= -->
+    <section class="tab-panel" id="panel-delete">
+      <header class="content-header">
+        <h1>Delete Profile</h1>
+        <p>Remove an analyzed profile from the database permanently.</p>
+      </header>
+      <div class="content-body">
+        <div class="card card-lg" style="max-width: 500px;">
+          <div class="form-inline">
+            <div class="form-group" style="flex:1; margin-bottom:0;">
+              <label class="form-label" for="delete-username">GitHub Username</label>
+              <input
+                type="text"
+                class="form-input"
+                id="delete-username"
+                placeholder="e.g. gaearon"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+            <button class="btn btn-danger" id="delete-btn" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              Delete Profile
+            </button>
+          </div>
+        </div>
+        <div id="delete-alert" class="mt-24"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL ==================== -->
+  <div class="modal-overlay" id="profile-modal" role="dialog" aria-modal="true" aria-label="Profile Details">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title">Profile Details</h2>
+        <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

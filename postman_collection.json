@@ -1,0 +1,136 @@
+{
+  "info": {
+    "name": "GitHub Profile Analyzer API",
+    "description": "Complete API collection for the GitHub Profile Analyzer — analyze, list, compare, and delete GitHub profiles.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Analyze Linus Torvalds GitHub profile",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/profiles/analyze/torvalds",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "profiles", "analyze", "torvalds"]
+        },
+        "description": "Analyze Linus Torvalds GitHub profile. Fetches user data and repository stats from the GitHub API, calculates activity score, and stores results in the database."
+      },
+      "response": []
+    },
+    {
+      "name": "Force re-analyze Dan Abramov profile",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/profiles/analyze/gaearon?force=true",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "profiles", "analyze", "gaearon"],
+          "query": [
+            {
+              "key": "force",
+              "value": "true",
+              "description": "Force re-analysis even if cached data exists"
+            }
+          ]
+        },
+        "description": "Force re-analyze Dan Abramov (gaearon) profile, bypassing the 1-hour cache and fetching fresh data from the GitHub API."
+      },
+      "response": []
+    },
+    {
+      "name": "List all analyzed profiles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/profiles?sort=followers&order=desc&limit=10&page=1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "profiles"],
+          "query": [
+            {
+              "key": "sort",
+              "value": "followers",
+              "description": "Sort field: followers, total_stars, public_repos, activity_score, analyzed_at"
+            },
+            {
+              "key": "order",
+              "value": "desc",
+              "description": "Sort order: asc or desc"
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "description": "Number of results per page (max 100)"
+            },
+            {
+              "key": "page",
+              "value": "1",
+              "description": "Page number for pagination"
+            }
+          ]
+        },
+        "description": "List all analyzed profiles with sorting, ordering, and pagination support."
+      },
+      "response": []
+    },
+    {
+      "name": "Get detailed profile for torvalds",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/profiles/torvalds",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "profiles", "torvalds"]
+        },
+        "description": "Get the full stored profile data for torvalds, including all stats, activity score, and repository information."
+      },
+      "response": []
+    },
+    {
+      "name": "Compare two profiles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/profiles/compare?users=torvalds,gaearon",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "profiles", "compare"],
+          "query": [
+            {
+              "key": "users",
+              "value": "torvalds,gaearon",
+              "description": "Comma-separated list of two usernames to compare"
+            }
+          ]
+        },
+        "description": "Compare two analyzed GitHub profiles side by side. Both profiles must be analyzed first."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete a profile",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/profiles/gaearon",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "profiles", "gaearon"]
+        },
+        "description": "Delete the stored profile data for gaearon from the database permanently."
+      },
+      "response": []
+    }
+  ]
+}
